@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: cp.recipe.cmd
-Version: 0.1a
+Version: 0.1b
 Summary: ZC Buildout recipe to execute a commande line in it's own shell
 Home-page: cp.recipe.cmd
 Author: YUHSD #70

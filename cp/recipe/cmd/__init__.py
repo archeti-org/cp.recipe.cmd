@@ -31,14 +31,14 @@ class Cmd(object):
 
 	def install(self):
 		"""installer"""
-		cmds = self.options.get('install_cmds', '')
+		cmds = self.options.get('install_cmd', '')
 		if self.on_install:
 			self.execute(cmds)
 		return tuple()
 
 	def update(self):
 		"""updater"""
-		cmds = self.options.get('update_cmds', '')
+		cmds = self.options.get('update_cmd', '')
 		if self.on_update:
 			self.execute(cmds)
 		return tuple()
