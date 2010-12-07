@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: cp.recipe.cmd
-Version: 0.1b
+Version: 0.2
 Summary: ZC Buildout recipe to execute a commande line in it's own shell
 Home-page: cp.recipe.cmd
 Author: YUHSD #70
@@ -26,18 +26,18 @@ Description: =====================
         
         [commandexample]
         recipe = cp.recipe.cmd
-        install_cmd =
-        echo "install commands go here"
-        cd /tmp
-        echo `pwd`
-        echo 'see, I exist in one shell instance.'
-        update_cmd =
-        echo "update commands go here"
+        install_cmds =
+           echo "install commands go here"
+        	cd /tmp
+        	echo `pwd`
+        	echo 'see, I exist in one shell instance.'
+        update_cmds =
+        	echo "update commands go here"
+        	
         
-        
-        On install, install_cmd will be turned into a shell script, and then ran.
-        on update, update_cmd will be turned into a shell script and then ran.  If you want update_cmd to be the same you can do something like this:
-        update_cmd = ${commandexample:install_cmd}
+        On install, install_cmds will be turned into a shell script, and then ran.
+        on update, update_cmds will be turned into a shell script and then ran.  If you want update_cmds to be the same you can do something like this:
+        update_cmds = ${commandexample:install_cmd}
         
         (where commandexample is the name of your part)
         
@@ -46,93 +46,93 @@ Description: =====================
         
         We need a config file::
         
-        >>> cfg = """
-        ... [buildout]
-        ... parts = cmds
-        ...
-        ... [cmds]
-        ... recipe = iw.recipe.cmd
-        ... on_install=true
-        ... cmds= %s
-        ... """
+          >>> cfg = """
+          ... [buildout]
+          ... parts = cmds
+          ...
+          ... [cmds]
+          ... recipe = iw.recipe.cmd
+          ... on_install=true
+          ... cmds= %s
+          ... """
         
-        >>> test_file = join(sample_buildout, 'test.txt')
-        >>> cmds = 'touch %s' % test_file
-        >>> write(sample_buildout, 'buildout.cfg', cfg % cmds)
+          >>> test_file = join(sample_buildout, 'test.txt')
+          >>> cmds = 'touch %s' % test_file
+          >>> write(sample_buildout, 'buildout.cfg', cfg % cmds)
         
         Ok, so now we can touch a file for testing::
         
-        >>> print system(buildout)
-        Installing cmds.
+          >>> print system(buildout)
+          Installing cmds.
         
-        >>> 'test.txt' in os.listdir(sample_buildout)
-        True
+          >>> 'test.txt' in os.listdir(sample_buildout)
+          True
         
         And remove it::
         
-        >>> test_file = join(sample_buildout, 'test.txt')
-        >>> cmds = 'rm -f %s' % test_file
-        >>> write(sample_buildout, 'buildout.cfg', cfg % cmds)
+          >>> test_file = join(sample_buildout, 'test.txt')
+          >>> cmds = 'rm -f %s' % test_file
+          >>> write(sample_buildout, 'buildout.cfg', cfg % cmds)
         
-        >>> print system(buildout)
-        Uninstalling cmds.
-        Installing cmds.
+          >>> print system(buildout)
+          Uninstalling cmds.
+          Installing cmds.
         
-        >>> 'test.txt' in os.listdir(sample_buildout)
-        False
+          >>> 'test.txt' in os.listdir(sample_buildout)
+          False
         
         We can run more than one commands::
         
-        >>> cmds = '''
-        ... touch %s
-        ... rm -f %s
-        ... ''' % (test_file, test_file)
+          >>> cmds = '''
+          ... touch %s
+          ... rm -f %s
+          ... ''' % (test_file, test_file)
         
-        >>> test_file = join(sample_buildout, 'test.txt')
-        >>> cmds = 'rm -f %s' % test_file
-        >>> write(sample_buildout, 'buildout.cfg', cfg % cmds)
+          >>> test_file = join(sample_buildout, 'test.txt')
+          >>> cmds = 'rm -f %s' % test_file
+          >>> write(sample_buildout, 'buildout.cfg', cfg % cmds)
         
-        >>> print system(buildout)
-        Updating cmds.
+          >>> print system(buildout)
+          Updating cmds.
         
-        >>> 'test.txt' in os.listdir(sample_buildout)
-        False
+          >>> 'test.txt' in os.listdir(sample_buildout)
+          False
         
         We can also run some python code::
         
-        >>> cfg = """
-        ... [buildout]
-        ... parts = py py2
-        ...
-        ... [py]
-        ... recipe = iw.recipe.cmd:py
-        ... on_install=true
-        ... cmds=
-        ...   >>> sample_buildout = buildout.get('directory', '.')
-        ...   >>> print os.listdir(sample_buildout)
-        ...   >>> shutil.rmtree(os.path.join(sample_buildout, "bin"))
-        ...   >>> print os.listdir(sample_buildout)
-        ... [py2]
-        ... recipe = iw.recipe.cmd:py
-        ... on_install=true
-        ... cmds=
-        ...   >>> def myfunc(value):
-        ...   ...     return value and True or False
-        ...   >>> v = 20
-        ...   >>> print myfunc(v)
-        ... """
+          >>> cfg = """
+          ... [buildout]
+          ... parts = py py2
+          ...
+          ... [py]
+          ... recipe = iw.recipe.cmd:py
+          ... on_install=true
+          ... cmds= 
+          ...   >>> sample_buildout = buildout.get('directory', '.')
+          ...   >>> print os.listdir(sample_buildout)
+          ...   >>> shutil.rmtree(os.path.join(sample_buildout, "bin"))
+          ...   >>> print os.listdir(sample_buildout)
+          ... [py2]
+          ... recipe = iw.recipe.cmd:py
+          ... on_install=true
+          ... cmds=
+          ...   >>> def myfunc(value):
+          ...   ...     return value and True or False
+          ...   >>> v = 20
+          ...   >>> print myfunc(v)
+          ... """
         
-        >>> write(sample_buildout, 'buildout.cfg', cfg)
+          >>> write(sample_buildout, 'buildout.cfg', cfg)
         
         Ok, so now we run it::
         
-        >>> print system(buildout)
-        Uninstalling cmds.
-        Installing py.
-        ['.installed.cfg', 'bin', 'buildout.cfg', 'develop-eggs', 'eggs', 'parts']
-        ['.installed.cfg', 'buildout.cfg', 'develop-eggs', 'eggs', 'parts']
-        Installing py2.
-        True
+          >>> print system(buildout)
+          Uninstalling cmds.
+          Installing py.
+          ['.installed.cfg', 'bin', 'buildout.cfg', 'develop-eggs', 'eggs', 'parts']
+          ['.installed.cfg', 'buildout.cfg', 'develop-eggs', 'eggs', 'parts']
+          Installing py2.
+          True
         
         
         

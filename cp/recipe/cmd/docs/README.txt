@@ -18,18 +18,18 @@ we have 2 options in the command.
 
 [commandexample]
 recipe = cp.recipe.cmd
-install_cmd =
+install_cmds =
    echo "install commands go here"
 	cd /tmp
 	echo `pwd`
 	echo 'see, I exist in one shell instance.'
-update_cmd =
+update_cmds =
 	echo "update commands go here"
 	
 
-On install, install_cmd will be turned into a shell script, and then ran.
-on update, update_cmd will be turned into a shell script and then ran.  If you want update_cmd to be the same you can do something like this:
-update_cmd = ${commandexample:install_cmd}
+On install, install_cmds will be turned into a shell script, and then ran.
+on update, update_cmds will be turned into a shell script and then ran.  If you want update_cmds to be the same you can do something like this:
+update_cmds = ${commandexample:install_cmd}
 
 (where commandexample is the name of your part)
 

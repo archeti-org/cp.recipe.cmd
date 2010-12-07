@@ -20,7 +20,7 @@ This module contains the tool of cp.recipe.cmd
 import os
 from setuptools import setup, find_packages
 
-version = '0.1b'
+version = '0.2'
 
 README = os.path.join(os.path.dirname(__file__), 
               'cp',
