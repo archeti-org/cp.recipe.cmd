@@ -15,7 +15,7 @@
 # along with this program; see the file COPYING. If not, write to the
 # Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 """
-Generic Test case for 'iw.recipe.cmd' doctest
+Generic Test case for 'cp.recipe.cmd' doctest
 """
 __docformat__ = 'restructuredtext'
 

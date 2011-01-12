@@ -21,6 +21,10 @@ import shutil
 import os, sys
 
 
+class CmdExecutionFailed(Exception):
+	pass
+
+
 class Cmd(object):
 	"""This recipe is used by zc.buildout"""
 
@@ -28,6 +32,7 @@ class Cmd(object):
 		self.buildout, self.name, self.options = buildout, name, options
 		self.on_install = options.get('on_install', True)
 		self.on_update = options.get('on_update', True)
+		self.shell = options.get('shell','/bin/sh')
 
 	def install(self):
 		"""installer"""
@@ -54,11 +59,18 @@ class Cmd(object):
 			dirname = tempfile.mkdtemp()
 			lines = [line.strip() for line in cmds]
 			tmpfile = os.path.join(dirname,'run.sh')
-			fil = open(tmpfile,'w')
-			fil.write("#!/bin/sh\n")
+			fil = open(tmpfile,'w+')
+			fil.write("#!%s\n" % self.shell)
 			fil.write('\n'.join(lines))
 			fil.close()
-			print commands.getoutput("/bin/sh %s" % tmpfile)
+			#give execute permissions
+			os.chmod(tmpfile,0700)
+			status,results = commands.getstatusoutput(tmpfile)
+			print results
+			if status:
+				raise CmdExecutionFailed,results
+			return status
+
 
 class Python(Cmd):
 

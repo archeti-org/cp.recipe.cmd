@@ -20,7 +20,7 @@ This module contains the tool of cp.recipe.cmd
 import os
 from setuptools import setup, find_packages
 
-version = '0.2'
+version = '0.3a'
 
 README = os.path.join(os.path.dirname(__file__), 
               'cp',
@@ -33,7 +33,7 @@ name = 'cp.recipe.cmd'
 
 setup(name=name,
       version=version,
-      description="ZC Buildout recipe to execute a commande line in it's own shell",
+      description="ZC Buildout recipe to execute commands in it's own shell",
       long_description=long_description,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
@@ -43,10 +43,10 @@ setup(name=name,
       keywords='buildout, zc.buildout, recipe',
       author='YUHSD #70',
       author_email='csawyer@yumaed.org',
-      url='cp.recipe.cmd',
+      url='https://bitbucket.org/csawyer/cp.recipe.cmd/overview',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=['cp.recipe'],
+      namespace_packages=['cp.recipe','cp'],
       include_package_data=True,
       zip_safe=False,
       test_suite = "cp.recipe.cmd.tests.test_cmddocs.test_suite",
