@@ -20,25 +20,20 @@ This module contains the tool of cp.recipe.cmd
 import os
 from setuptools import setup, find_packages
 
-version = '0.3a'
-
-README = os.path.join(os.path.dirname(__file__), 
-              'cp',
-              'recipe',
-              'cmd', 'docs', 'README.txt')
-
-long_description = open(README).read() + '\n\n' 
+version = '0.3'
 
 name = 'cp.recipe.cmd'
 
 setup(name=name,
       version=version,
       description="ZC Buildout recipe to execute commands in it's own shell",
-      long_description=long_description,
+      long_description=open("README.txt").read() + "\n" +
+                       open("HISTORY.txt").read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
+        "Framework :: Buildout",
         ],
       keywords='buildout, zc.buildout, recipe',
       author='YUHSD #70',
