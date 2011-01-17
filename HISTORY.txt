@@ -1,7 +1,13 @@
 Changelog
 =========
 
-0.3 (2011-01-17)
+0.4
+----
+
+- install hg plugin so HISTORY.txt makes it into distribution
+  [sureshvv]
+
+0.4 (2011-01-17)
 ----------------
 
 - add HISTORY.txt to track release notes
