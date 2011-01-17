@@ -20,7 +20,7 @@ This module contains the tool of cp.recipe.cmd
 import os
 from setuptools import setup, find_packages
 
-version = '0.4dev'
+version = '0.3'
 
 name = 'cp.recipe.cmd'
 
