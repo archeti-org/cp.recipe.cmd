@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.5 (2014-07-24)
+----------------
+cleaned up temp directory problem. issue #8
+
 0.4 (unreleased)
 ----------------
 
