@@ -69,6 +69,7 @@ class Cmd(object):
 			print results
 			if status:
 				raise CmdExecutionFailed,results
+			shutil.rmtree(dirname)
 			return status
 
 
